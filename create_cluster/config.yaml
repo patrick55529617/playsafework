@@ -1,9 +1,5 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
-containerdConfigPatches:
-- |-
-  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5000"]
-    endpoint = ["http://kind-registry:5000"]
 nodes:
 - role: control-plane
   extraPortMappings:
@@ -15,27 +11,25 @@ nodes:
     hostPort: 443
     listenAddress: "127.0.0.1"
     protocol: TCP
-- role: control-plane
-  extraPortMappings:
-  - containerPort: 80
-    hostPort: 80
+  - containerPort: 30000
+    hostPort: 30000
     listenAddress: "127.0.0.1"
     protocol: TCP
-  - containerPort: 443
-    hostPort: 443
+  - containerPort: 32767
+    hostPort: 32767
     listenAddress: "127.0.0.1"
     protocol: TCP
 - role: control-plane
-  extraPortMappings:
-  - containerPort: 80
-    hostPort: 80
-    listenAddress: "127.0.0.1"
-    protocol: TCP
-  - containerPort: 443
-    hostPort: 443
-    listenAddress: "127.0.0.1"
-    protocol: TCP
+- role: control-plane
 - role: worker
+  labels:
+    usage: infra
 - role: worker
+  labels:
+    usage: infra
 - role: worker
+  labels:
+    usage: app
 - role: worker
+  labels:
+    usage: app
